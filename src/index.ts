@@ -1,83 +1,56 @@
-import * as http from 'http';
-import * as path from 'path';
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+/**
+ * Define contants
+ * ###############################################################################
+ */
+const mongoConnectionString = `mongodb://mongo:27017/auth`;
+const PORT = 80;
 
-import { DatabaseConnector } from "./database-connections/database-connector"
+/**
+ * Import modules
+ * ###############################################################################
+ */
+import { Server } from './server';
+import { MongoDbConnector } from './database-connections/mongodb-connector';
 
-export class Server {
+import { Container } from './config/container';
+import { Router } from './config/router';
 
-    public    express: express.Application;
-    protected port: number = 80;
+/**
+ * Configure the server
+ * ###############################################################################
+ */
+const server = new Server(PORT);
+//server.addDBConnector(new MongoDbConnector(mongoConnectionString));
 
-    protected connectors:Array<DatabaseConnector> = new Array();
+/**
+ * Configure the routes
+ * ###############################################################################
+ */
+const container = new Container();
 
-    /**
-     * Used to create and configure the express app and returns an instance of the class.
-     * It requires to pass it a port to which it will bind the application when we call
-     * the Server:run() method.
-     * @param port 
-     */
-    constructor(port?:number){
 
-        if(port) {
-            this.port = port;
-        }
+const router = new Router(server.app, container);
 
-        this.express = express();
+/**
+ * Run the server
+ * ###############################################################################
+ */
+
+(async() => {
+
+    try{
+        let connectors = await server.run();
         
-        // Configure express
-        this.express
-        .use(bodyParser.json())
-        .use(bodyParser.urlencoded({ extended: false }));
+        global["connections"] = {
+            mongo: connectors[0]
+        };
+
+        container.mongooseConnection = connectors[0];
+
+    } catch(err) {
+
+        console.log("Something went wrong while starting the server...");
+        console.log(err);
     }
 
-    /**
-     * Returns the express app.
-     */
-    public get app():express.Application {
-        return this.express;
-    }
-
-    /**
-     * Adds a database connector to the class. The connector list will be executes before 
-     * we start the server when we call the Server:run() method.
-     * @param connector 
-     */
-    public addDBConnector(connector:DatabaseConnector):void {
-        this.connectors.push(connector);
-    }
-
-    /**
-     * Goes through all the connectors and call their connect method.
-     * It returns a Promise that returns the list of connections.
-     * It also starts the http server.
-     * @return {Promise}
-     */
-    public run(): Promise<any>{
-
-        let promises:Array<Promise<any>> = new Array();
-
-        for(let i = 0; i < this.connectors.length; i++){
-            promises.push(this.connectors[i].connect());
-        }
-
-        if(promises.length == 0) {
-            promises.push(Promise.resolve());
-        }
-
-        return new Promise((resolve, reject) => {
-
-            Promise.all(promises)
-            .then(connectors => {
-
-                // Use express over http
-                http.createServer(this.app)
-                    .listen(this.port);		        
-                console.log("API - Running on PORT: " + this.port);
-                resolve(connectors);
-            })
-            .catch(reject);
-        });
-    }
-}
+})();

@@ -2,8 +2,7 @@ import { Container         } from "./container";
 import { StatusCodes       } from './../classes/statusCodes';
 import { ApiResponse       } from './../classes/api-reponse';
 import { AppController     } from "./../controllers/appController";
-import { CountryController } from "./../controllers/countryController";
-import { CityController    } from "./../controllers/cityController";
+import { HelloController } from "./../controllers/hello-controller";
 
 import * as express from "express";
 
@@ -19,9 +18,7 @@ export class Router {
     }
 
     initControllers(){
-
-        this.controllers.push(new CountryController(this.container));
-        this.controllers.push(new CityController   (this.container));		
+        this.controllers.push(new HelloController(this.container));
     }
     configureRoutes() {
 
