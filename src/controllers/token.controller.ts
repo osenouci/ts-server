@@ -2,8 +2,8 @@
 // ###################################################################
 import { AppController  } from './appController';
 import { Container      } from './../config/container';
-import { StatusCodes    } from './../classes/statusCodes';
-import { ApiResponse    } from './../classes/api-reponse';
+import { StatusCodes    } from './../classes/utilities/statusCodes';
+import { ApiResponse    } from './../classes/utilities/api-reponse';
 
 //  Include modules
 // ###################################################################
@@ -11,7 +11,7 @@ import * as express from "express";
 
 //  Define the controller
 // ###################################################################
-export class HelloController extends AppController {
+export class TokenController extends AppController {
 
     constructor(container:Container) {
         super(container);
@@ -21,7 +21,7 @@ export class HelloController extends AppController {
      * Configure routes
      * #############################################################
      */
-    configurePublicRoutes(app:express.Application) {
+    configureRoutes(app:express.Application) {
          app.get ("/", this.sayHello.bind(this)  );        
     }
 

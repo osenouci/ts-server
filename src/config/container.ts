@@ -1,5 +1,5 @@
-import { DatabaseConnections } from "./../classes/database-connections";
-import { Directories } from "./../classes/directories";
+import { DatabaseConnections } from "./../classes/utilities/database-connections";
+import { Directories } from "./../classes/utilities/directories";
 
 export class Container {
 
@@ -9,7 +9,6 @@ export class Container {
     protected connections:DatabaseConnections;
 
     constructor(){
-
         this.directories = new Directories();
         this.connections = new DatabaseConnections();
     }
@@ -54,5 +53,9 @@ export class Container {
      */    
     public get connection():any {
         return this.connections;
+    }
+
+    public getMongoConnection():any{
+        return global["connections"].mongo;
     }
 }

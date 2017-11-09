@@ -1,9 +1,17 @@
-import * as http from 'http';
-import * as path from 'path';
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+import * as http        from 'http';
+import * as path        from 'path';
+import * as express     from 'express';
+import * as bodyParser  from 'body-parser';
+import * as i18n        from 'i18n';
 
 import { DatabaseConnector } from "./database-connections/database-connector"
+
+
+i18n.configure({
+    locales  : ['en', 'fr', 'ar'],
+    directory: path.join(__dirname, "local")
+});
+
 
 export class Server {
 
@@ -29,6 +37,7 @@ export class Server {
         // Configure express
         this.express
         .use(bodyParser.json())
+        .use(i18n.init)
         .use(bodyParser.urlencoded({ extended: false }));
     }
 

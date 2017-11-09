@@ -1,24 +1,26 @@
 import { Container         } from "./container";
-import { StatusCodes       } from './../classes/statusCodes';
-import { ApiResponse       } from './../classes/api-reponse';
+import { StatusCodes       } from './../classes/utilities/statusCodes';
+import { ApiResponse       } from './../classes/utilities/api-reponse';
 import { AppController     } from "./../controllers/appController";
-import { HelloController } from "./../controllers/hello-controller";
+import { AccountController } from "./../controllers/account.controller";
+import { Passwordontroller } from "./../controllers/password.controller";
+import { TokenController   } from "./../controllers/token.controller";
 
 import * as express from "express";
 
 export class Router {
 
-    protected controllers:Array<AppController>;
+    protected controllers:Array<AppController> = new Array();
 
     constructor(private app:express.Application, private container:Container) {
-        this.controllers = new Array();
-
         this.initControllers();
         this.configureRoutes();
     }
 
-    initControllers(){
-        this.controllers.push(new HelloController(this.container));
+    initControllers() {
+		this.controllers.push(new AccountController(this.container));
+		this.controllers.push(new Passwordontroller(this.container));
+        this.controllers.push(new TokenController  (this.container));				
     }
     configureRoutes() {
 
@@ -27,23 +29,10 @@ export class Router {
 			next();
 		});
 
-		// Configure public routes
+		// Configure public routes for all the controllers.
 		for(let i = 0; i < this.controllers.length;i++) {
-			this.controllers[i].configurePublicRoutes(this.app);
+			this.controllers[i].configureRoutes(this.app);
 		}
-
-		// Configure private routes
-		//app.all("*", this.AuthController.verifyJWT.bind(this.AuthController));	// The following methods require a valid token to be accessed
-		for(let i = 0; i < this.controllers.length;i++) {
-			this.controllers[i].configureProtectedRoutes(this.app);
-		}
-
-		// Configure admin routes
-		//app.all("/admin/*", this.AuthController.adminAccessOnly.bind(this.AuthController));	// Add security checks for the admin calls
-		for(let i = 0; i < this.controllers.length;i++) {
-			this.controllers[i].configureAdminRoutes(this.app);
-		}
-
 		this.configureErrorHandling(this.app);		
     }
 
