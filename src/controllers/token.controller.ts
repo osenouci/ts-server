@@ -1,9 +1,12 @@
 //  Include classes
 // ###################################################################
-import { AppController  } from './appController';
+import { AppController  } from './app.controller';
 import { Container      } from './../config/container';
 import { StatusCodes    } from './../classes/utilities/statusCodes';
 import { ApiResponse    } from './../classes/utilities/api-reponse';
+
+import { Config } from './../config/config';
+import { JSONWebTokenService, JWTErrorCodes } from './../services/jsonWebToken.service';
 
 //  Include modules
 // ###################################################################
@@ -13,8 +16,11 @@ import * as express from "express";
 // ###################################################################
 export class TokenController extends AppController {
 
+    protected jwtService:JSONWebTokenService;
+
     constructor(container:Container) {
         super(container);
+        this.jwtService = new JSONWebTokenService();
     }
 
     /**
@@ -22,17 +28,44 @@ export class TokenController extends AppController {
      * #############################################################
      */
     configureRoutes(app:express.Application) {
-         app.get ("/", this.sayHello.bind(this)  );        
+        
+        // Check the token
+        app.get ("/token/check", this.checkAccess.bind(this));           
     }
 
     /**
      * Route functions
      * #############################################################
      */  
-    sayHello(req:express.Request, res:express.Response) {
-        console.log("IndexerController:indexFromWebsites() -> Got request");
+    protected checkAccess(req:express.Request, res:express.Response) {
+
         let response = new ApiResponse();
-        response.data = "Hello world";
-        res.json(response.json);        
+
+        try {
+
+            console.log("verifying access");
+            
+            // Check the access rights
+            let result:any = this.jwtService.verifyUserAccess(req);
+
+            // Pass the access and refresh tokens to the back end API.
+            this.setAccessHeaders(res, result.accessToken, result.refreshToken);
+            console.log("Access granted");            
+
+        } catch(err) {
+
+            console.log("Error: ", err);            
+
+            let apiResponse:ApiResponse = new ApiResponse();
+            apiResponse.error = this.translateUsingRequest("Your session has expired. Please login again!", req);
+
+            if(err == JWTErrorCodes.NO_DEVICE_REGISTERED_WITH_TOKEN || err == JWTErrorCodes.REFRESH_TOKEN_EXPIRED) {
+                res.setHeader(Config.tokenConfig.refreshTokenExpired, "true");
+            }
+
+            response.json(apiResponse.json);
+        }
+
     }
+
 }

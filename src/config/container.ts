@@ -1,5 +1,7 @@
 import { DatabaseConnections } from "./../classes/utilities/database-connections";
 import { Directories } from "./../classes/utilities/directories";
+import { EmailConnector } from './../classes/connectors/email-connector';
+
 
 export class Container {
 
@@ -8,11 +10,23 @@ export class Container {
     protected models     :any;
     protected connections:DatabaseConnections;
 
+    protected _emailConnector:EmailConnector;
+
     constructor(){
-        this.directories = new Directories();
-        this.connections = new DatabaseConnections();
+        this.directories     = new Directories();
+        this.connections     = new DatabaseConnections();
+        this._emailConnector = new EmailConnector();
     }
 
+
+    /**
+     * ###################################################################
+     *  Get connectors
+     * ###################################################################
+     */
+    get emailConnector():EmailConnector {
+        return this._emailConnector;
+    }    
     /**
      * ###################################################################
      *  Set the database connections

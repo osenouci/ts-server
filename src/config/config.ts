@@ -129,8 +129,19 @@ export class DataBaseConfig extends ConfigBase {
         return this._mongoConnectionString;
     }       
 }    
+export class NotificationServiceConfig extends ConfigBase {
+    
+    public host:string = "http://localhost:1080";
+
+    constructor() {
+        super();
+        this.host = this.getValue("NOTIFICATION_SERVER_PORT", this.host);
+    } 
+}
+
 export class Configuration extends ConfigBase {
 
+    public notificationServiceConfig:NotificationServiceConfig;
     public dataBaseConfig:DataBaseConfig;
     public tokenConfig:TokenConfig;
     public apiConfig  :ApiConfig;

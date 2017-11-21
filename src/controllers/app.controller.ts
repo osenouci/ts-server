@@ -4,7 +4,8 @@ import * as express from "express";
 import { ApiResponse} from './../classes/utilities/api-reponse';
 import { DeviceInfo } from './../classes/utilities/device-info';
 import { Container  } from './../config/container';
-
+import { Config     } from './../config/config';
+import {AuthenticationData } from './../services/auth.service';
 
 export class AppController {
 
@@ -13,8 +14,20 @@ export class AppController {
     constructor(container:Container) {
         this.container = container;
     }
-    configureRoutes(app) {}
+    public configureRoutes(app) {}
 
+    protected setAccessHeaders(res:express.Response, accessToken:string, refreshToken:string) {
+        res.setHeader(Config.tokenConfig.accessTokenName , accessToken  || "");
+        res.setHeader(Config.tokenConfig.refreshTokenName, refreshToken || "");   
+    }
+    /**
+     * Sets the access and refresh tokens in headers.
+     * @param {express.Response} res 
+     * @param {AuthenticationData} data 
+     */
+    protected setTokenHeaders(res:express.Response, data:AuthenticationData){     
+        this.setAccessHeaders(res, data.accessToken, data.refreshToken);
+    }    
     protected getDeviceInformation(req:express.Request):DeviceInfo {
         return new DeviceInfo(req);
     }    
@@ -39,4 +52,6 @@ export class AppController {
         let deviceInfo = this.getDeviceInformation(req);
         return this.translate(phrase, deviceInfo.language);
     }
+
+
 }
