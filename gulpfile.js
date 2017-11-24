@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const JSON_FILES = ['src/*.json', 'src/**/*.json'];
+const del = require('del');
 
 // pull in the project TypeScript config
 const tsProject = ts.createProject('tsconfig.json');
@@ -20,4 +21,13 @@ gulp.task('assets', function() {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', ['watch', 'assets']);
+gulp.task('cleanBeforeCopy', function(){
+  return del('dist/local', {force:true});
+});
+
+gulp.task('copy', ['cleanBeforeCopy'], function() {
+  return gulp.src('src/local/**/*', {base: 'src'})
+  .pipe(gulp.dest('dist'));
+});
+
+gulp.task('default', ['watch', 'assets', 'copy']);

@@ -1,0 +1,29 @@
+{
+    "ACCOUNT_MODULE (CREATE)": "=======================================================================",    
+    "account does not exist": "Invalid account! Maybe account does not exist",
+    "Invalid account credentials": "Invalid account credentials. Please check your account credentials and try again",
+    "account not activated": "Your account has not been activated yet. Please activate your account before you try to login.",
+    "account created with Facebook": "Your account was created using login with Facebook therefore you can only login using facebook",
+    "account created with Google": "Your account was created using login with Google therefore you can only login using Google",
+    "error while creating account": "An internal error occurred while trying to create your account. Please try again.",
+    "fill in your details": "Please fill in your details in order to register",
+    "Invalid email address": "Invalid email address",
+    "respect min password": "Please respect the min password length and make sure that it does not contain any spaces.",
+    "email address registered": "The email address you provided is already registered.",
+    "account already activated": "Your account has already been activated!",
+    "account does not exist for activate": "The account you are trying to activate does not exist. All inactive account are deleted after a week. You can create a new account or sign in using Google or Facebook.",
+    "activation code not valid": "The activation code is no longer valid! Please request a new activation code.",
+    "Oppes someting went wrong": "Oppes someting went wrong",
+    "Account does not exists": "Account does not exists",
+    "account not activated yet": "Account has not been activated yet.",
+    "3 password resets limit": "limit of 3 password resets per day has been reached. Please try again tomorrow.",
+    "account login with Facebook": "This functionality does not apply to your account as you have chosen to login with Facebook.",
+    "account login with Google": "This functionality does not apply to your account as you have chosen to login with Google.",
+    "submitted code expired": "The submitted code has already expired or is not valid. Please restart the password reset process.",
+
+    "PHOTO_MODULE": "=======================================================================",
+    "Invalid upload paramters": "Invalid upload parameters",
+    "Failed update profile photo": "Failed to update your profile photo.",
+    "Failed to get your data": "Failed to get your data please try again."
+
+}

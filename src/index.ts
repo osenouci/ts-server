@@ -12,8 +12,8 @@ import { Config } from './config/config';
 import { Server             } from './server';
 import { MongoDbConnector   } from './database-connections/mongodb-connector';
 
-import { Container  } from './config/container';
-import { Router     } from './config/router';
+import { Container  } from './classes/container';
+import { Router     } from './router';
 
 /**
  * Configure the server

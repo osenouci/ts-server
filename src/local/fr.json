@@ -1,0 +1,30 @@
+{
+    "ACCOUNT_MODULE (CREATE)": "=======================================================================",
+    "account does not exist": "Ce compte n'existe pas!",
+    "Invalid account credentials": "Votre nom d'utilisateur ou votre mot de passe semble incorrect. Veuillez les vérifier et réessayer.",
+    "account not activated": "Votre compte n'est pas activé. Veuillez l'activer avant de continuer.",
+    "account created with Facebook": "Votre compte a été créé avec Facebook. Veuillez utiliser Facebook pour vous connecter.",
+    "account created with Google": "Votre compte a été créé avec Google. Veuillez utiliser Google pour vous connecter.",
+    "error while creating account": "Une erreur s'est produite pendant la création de votre compte. Veuillez essayer à nouveau.",
+    "fill in your details": "Veuillez remplir le formulaire pour créer un compte.",
+    "Invalid email address": "Votre adresse e-mail invalide",
+    "respect min password": "Veuillez respecter la longueur minimale du mot de passe et assurez qu'il ne contient aucun espace.",
+    "email address registered": "L'adresse e-mail que vous avez fournie est déjà enregistrée.",
+    "account already activated": "Votre compte a déjà été activé!",
+    "account does not exist for activate": "Le compte que vous essayez d'activer n'existe plus. Tous les comptes inactifs sont supprimés après une semaine. Vous pouvez vous connecter directement avec Google ou Facebook.",
+    "activation code not valid": "Le code d'activation n'est plus valide! Veuillez demander un nouveau code d'activation.",
+    "Oppes someting went wrong": "Oops something went wrong.",
+    "Account does not exists": "Ce compte n'existe pas.",
+    "account not activated yet": "Votre compte n'a pas encore été activé.",
+    "3 password resets limit": "La limite de 3 réinitialisations de mot de passe par jour a été atteinte. Veuillez essayer demain.",
+    "account login with Facebook": "Votre compte ne prend pas en charge ce mode de connexion. Veulliez vous connecter avec Facebook.",
+    "account login with Google": "Votre compte ne prend pas en charge ce mode de connexion. Veulliez vous connecter avec Google.",
+    "submitted code expired": "Le code de réinitialisation  du mot de passe a déjà expiré ou n'est pas valide.",
+
+    "PHOTO_MODULE": "=======================================================================",
+    "Invalid upload paramters": "Paramètres invalides.",
+    "Failed update profile photo": "La mise à jour de votre photo de profile a échoué. Veuillez essayer à nouveau.",
+    "Failed to get your data": "On n'a pas pu charger vos données. Veuillez vous déconnecter et vous reconnecter à nouveau."
+
+
+}

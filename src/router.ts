@@ -1,12 +1,12 @@
-import { Container         } from "./container";
-import { StatusCodes       } from './../classes/utilities/statusCodes';
-import { ApiResponse       } from './../classes/utilities/api-reponse';
+import { Container         } from "./classes/container";
+import { StatusCodes       } from './classes/utilities/statusCodes';
+import { ApiResponse       } from './classes/utilities/api-reponse';
 
-import { AppController     } from "./../controllers/app.controller";
-import { AccountController } from "./../controllers/account.controller";
-import { PasswordController} from "./../controllers/password.controller";
-import { TokenController   } from "./../controllers/token.controller";
-import { LoginController   } from "./../controllers/login.controller";
+import { AppController     } from "./controllers/app.controller";
+import { AccountController } from "./controllers/account.controller";
+import { PasswordController} from "./controllers/password.controller";
+import { TokenController   } from "./controllers/token.controller";
+import { LoginController   } from "./controllers/login.controller";
 
 
 
@@ -25,9 +25,7 @@ export class Router {
 		this.controllers.push(new AccountController (this.container));
 		this.controllers.push(new PasswordController(this.container));
 		this.controllers.push(new TokenController   (this.container));
-		this.controllers.push(new LoginController   (this.container));			
-		
-		
+		this.controllers.push(new LoginController   (this.container));
     }
     configureRoutes() {
 

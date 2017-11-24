@@ -1,6 +1,6 @@
-import { DatabaseConnections } from "./../classes/utilities/database-connections";
-import { Directories } from "./../classes/utilities/directories";
-import { EmailConnector } from './../classes/connectors/email-connector';
+import { DatabaseConnections } from "./utilities/database-connections";
+import { Directories } from "./utilities/directories";
+import { EmailConnector } from './connectors/email-connector';
 
 
 export class Container {

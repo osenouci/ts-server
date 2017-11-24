@@ -3,7 +3,7 @@ import * as express from "express";
 
 import { ApiResponse} from './../classes/utilities/api-reponse';
 import { DeviceInfo } from './../classes/utilities/device-info';
-import { Container  } from './../config/container';
+import { Container  } from './../classes/container';
 import { Config     } from './../config/config';
 import {AuthenticationData } from './../services/auth.service';
 

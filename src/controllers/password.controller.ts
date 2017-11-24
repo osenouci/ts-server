@@ -1,7 +1,7 @@
 //  Include classes
 // ###################################################################
 import { AppController  } from './app.controller';
-import { Container      } from './../config/container';
+import { Container      } from './../classes/container';
 import { StatusCodes    } from './../classes/utilities/statusCodes';
 import { ApiResponse    } from './../classes/utilities/api-reponse';
 
