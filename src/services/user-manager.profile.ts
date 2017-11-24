@@ -1,6 +1,7 @@
 // Include classes
 // ############################################################################
 import { SocialProfile   } from './../classes/socialmedia/social.profile';
+import * as mongoose from "mongoose";
 
 // Include Models
 // ############################################################################
@@ -115,22 +116,10 @@ export class UserProfileManager {
      */
     public findById(userId: string, includeAccounts: boolean = false): Promise < any > {
         
-        if (!includeAccounts) {
-            return UserModel.findOne({
-                _id: userId
-            }).exec();
-        }
-
-        return UserModel.findOne({
-                _id: userId
-            })
-            .populate('credentials')
-            .exec();
+        let query:any = UserModel.findById(userId);
+        query = includeAccounts? query.populate('credentials') : query;
+        return query.exec();
             
     } // End: UserManager::findById()
-
-
-
-
 
 }

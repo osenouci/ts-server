@@ -5,6 +5,8 @@ import { Container      } from './../classes/container';
 import { StatusCodes    } from './../classes/utilities/statusCodes';
 import { ApiResponse    } from './../classes/utilities/api-reponse';
 
+import { SecurityToken } from './../classes/security/security-token';
+
 import { Config } from './../config/config';
 import { JSONWebTokenService, JWTErrorCodes } from './../services/jsonWebToken.service';
 
@@ -37,7 +39,7 @@ export class TokenController extends AppController {
      * Route functions
      * #############################################################
      */  
-    protected checkAccess(req:express.Request, res:express.Response) {
+    protected async checkAccess(req:express.Request, res:express.Response) {
 
         let response = new ApiResponse();
 
@@ -48,6 +50,10 @@ export class TokenController extends AppController {
             // Check the access rights
             let result:any = this.jwtService.verifyUserAccess(req);
 
+            let refreshToken:SecurityToken = new SecurityToken(result.accessToken);
+            await refreshToken.decode();
+            console.log(refreshToken);
+
             // Pass the access and refresh tokens to the back end API.
             this.setAccessHeaders(res, result.accessToken, result.refreshToken);
             console.log("Access granted");            
@@ -56,14 +62,13 @@ export class TokenController extends AppController {
 
             console.log("Error: ", err);            
 
-            let apiResponse:ApiResponse = new ApiResponse();
-            apiResponse.error = this.translateUsingRequest("Your session has expired. Please login again!", req);
+            response.error = this.translateUsingRequest("Your session has expired. Please login again!", req);
 
             if(err == JWTErrorCodes.NO_DEVICE_REGISTERED_WITH_TOKEN || err == JWTErrorCodes.REFRESH_TOKEN_EXPIRED) {
                 res.setHeader(Config.tokenConfig.refreshTokenExpired, "true");
             }
 
-            response.json(apiResponse.json);
+            res.json(response.json);
         }
 
     }

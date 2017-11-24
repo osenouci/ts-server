@@ -39,8 +39,26 @@ export class AccountController extends AppController {
        // Local account management
        app.post("/activate", this.activate.bind(this));         
 
+       // Get user information
+       app.get("/user/:id", this.getUserInfo.bind(this));
     }
+    
 
+    public async getUserInfo(req:express.Request, res:express.Response, next:express.NextFunction) {
+
+        const response:ApiResponse = new ApiResponse();
+
+        try {
+
+            if(!req.params.id) { throw new Error(); }
+            response.data = await this.authService.getUserInformation(req.params.id);
+
+        } catch(err){
+            response.error = this.translateUsingRequest("Failed to get your data", req);
+        }
+
+        res.json(response.json);
+    }
     /**
      * ###############################################################################################################
      * Section: Activation and password reset

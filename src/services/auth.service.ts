@@ -130,7 +130,31 @@ export class AuthService{
     protected deviceManager:DeviceManager = new DeviceManager();
     protected tokenManager:TokenManager   = new TokenManager();
 
+    /**
+     * Gets a given user's profile and banner photos, gender, language and name.
+     * @param {string} userId 
+     * @return 
+     */
+    public async getUserInformation(userId:string) {
 
+        try {
+
+            let user = await this.userProfileManager.findById(userId);
+            if(!user) { throw new Error() }
+
+            return {
+                profilePhoto: user.profilePhoto, 
+                bannerPhoto : user.bannerPhoto, 
+                gender      : user.gender,
+                extensions  : user.extensions,
+                language    : user.settings.language,
+                name        : user.name
+            };
+
+        } catch(err){
+            return null;   
+        }
+    }
     /**
      * Logs in a user using Google. If the user does not have an account then it will create it and logs in the user.  
      * It requires a google access id token.
