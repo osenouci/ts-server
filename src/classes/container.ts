@@ -1,11 +1,9 @@
 import { DatabaseConnections } from "./utilities/database-connections";
-import { Directories } from "./utilities/directories";
 import { EmailConnector } from './connectors/email-connector';
 
 
 export class Container {
 
-    protected directories:Directories = new Directories();
     protected utilities  :any;
     protected models     :any;
     protected connections:DatabaseConnections;
@@ -13,11 +11,9 @@ export class Container {
     protected _emailConnector:EmailConnector;
 
     constructor(){
-        this.directories     = new Directories();
         this.connections     = new DatabaseConnections();
         this._emailConnector = new EmailConnector();
     }
-
 
     /**
      * ###################################################################
@@ -44,12 +40,6 @@ export class Container {
      *  Getters
      * ###################################################################
      */
-    /**
-     * Returns a set containing a pre-defined set of directories.
-     */
-    public get directory():any {
-        return this.directories;
-    }    
     /**
      * Returns a set of utilities
      */    

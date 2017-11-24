@@ -5,7 +5,7 @@ export const REFRESH_TOKEN_TTL:string = '30d'; // 60m
 export const REFRESH_TOKEN_LENGTH:number = 64;
 export const RENEWAL_PERIOD_DAYS :number = 5;  // Renew the access token X days in advance   
 
-const DEFAULT_PORT = 80;
+const DEFAULT_PORT = 82;
 
 export const DEFAULT_LANGUAGE:string = "en";
 export const DEFAULT_MONGO_CONNECTION_STRING:string = `mongodb://mongo:27017/so_db`;
@@ -64,11 +64,11 @@ export class TokenConfig extends ConfigBase {
 
     constructor() {
         super();
-        this._signSecret            = this.getValue("SIGNING_SECRET"        , SIGNING_SECRET      );  
-        this._accessTokenTTLL       = this.getValue("ACCESS_TOKEN_TTL"      , ACCESS_TOKEN_TTL    );  
-        this._refreshTokenTTL       = this.getValue("REFRESH_TOKEN_TTL"     , REFRESH_TOKEN_TTL   );  
-        this._refreshTokenLength    = this.getValue("REFRESH_TOKEN_LENGTH"  , REFRESH_TOKEN_LENGTH);  
-        this._renewalPeriodDays     = this.getValue("RENEWAL_PERIOD_DAYS"   , RENEWAL_PERIOD_DAYS );        
+        this._signSecret            = this.getValue("SIGNING_SECRET"      , SIGNING_SECRET      );  
+        this._accessTokenTTLL       = this.getValue("ACCESS_TOKEN_TTL"    , ACCESS_TOKEN_TTL    );  
+        this._refreshTokenTTL       = this.getValue("REFRESH_TOKEN_TTL"   , REFRESH_TOKEN_TTL   );  
+        this._refreshTokenLength    = this.getValue("REFRESH_TOKEN_LENGTH", REFRESH_TOKEN_LENGTH);  
+        this._renewalPeriodDays     = this.getValue("RENEWAL_PERIOD_DAYS" , RENEWAL_PERIOD_DAYS );   
     }
     public get refreshTokenName():string {
         return this._refreshTokenName;
@@ -131,11 +131,11 @@ export class DataBaseConfig extends ConfigBase {
 }    
 export class NotificationServiceConfig extends ConfigBase {
     
-    public host:string = "http://localhost:1080";
+    public host:string = "http://notification:1080";
 
     constructor() {
         super();
-        this.host = this.getValue("NOTIFICATION_SERVER_PORT", this.host);
+        this.host = this.getValue("NOTIFICATION_SERVER_URL", this.host);
     } 
 }
 
@@ -157,6 +157,5 @@ export class Configuration extends ConfigBase {
         this.apiConfig      = new ApiConfig();
     }
 }
-
 
 export const Config: Configuration = new Configuration();

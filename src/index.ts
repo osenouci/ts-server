@@ -9,11 +9,11 @@ import { Config } from './config/config';
  * Import modules
  * ###############################################################################
  */
-import { Server             } from './server';
-import { MongoDbConnector   } from './database-connections/mongodb-connector';
+import { Server           } from './server';
+import { MongoDbConnector } from './database-connections/mongodb-connector';
 
-import { Container  } from './classes/container';
-import { Router     } from './router';
+import { Container } from './classes/container';
+import { Router    } from './router';
 
 /**
  * Configure the server
