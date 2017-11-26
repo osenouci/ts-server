@@ -152,6 +152,7 @@ export class Configuration extends ConfigBase {
     constructor() {
         super();
 
+        this.notificationServiceConfig = new NotificationServiceConfig();
         this.dataBaseConfig = new DataBaseConfig();
         this.tokenConfig    = new TokenConfig();
         this.apiConfig      = new ApiConfig();

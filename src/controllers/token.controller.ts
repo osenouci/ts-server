@@ -41,6 +41,10 @@ export class TokenController extends AppController {
      */  
     protected async checkAccess(req:express.Request, res:express.Response) {
 
+
+        console.log("\n\n\n\n\n\nValidating new token: \n\n\n\n");
+
+
         let response = new ApiResponse();
 
         try {
@@ -48,11 +52,18 @@ export class TokenController extends AppController {
             console.log("verifying access");
             
             // Check the access rights
-            let result:any = this.jwtService.verifyUserAccess(req);
+            let result:any = await this.jwtService.verifyUserAccess(req);
 
             let refreshToken:SecurityToken = new SecurityToken(result.accessToken);
             await refreshToken.decode();
-            console.log(refreshToken);
+
+            response.data = {
+                language: this.getDeviceInformation(req).language,
+                userId  : refreshToken.data.userId,
+                email   : refreshToken.data.email,
+                deviceId: refreshToken.data.deviceId,
+                name    : refreshToken.data.name
+            };
 
             // Pass the access and refresh tokens to the back end API.
             this.setAccessHeaders(res, result.accessToken, result.refreshToken);
@@ -60,17 +71,15 @@ export class TokenController extends AppController {
 
         } catch(err) {
 
-            console.log("Error: ", err);            
-
+            console.log("Error: ", err);
             response.error = this.translateUsingRequest("Your session has expired. Please login again!", req);
 
             if(err == JWTErrorCodes.NO_DEVICE_REGISTERED_WITH_TOKEN || err == JWTErrorCodes.REFRESH_TOKEN_EXPIRED) {
                 res.setHeader(Config.tokenConfig.refreshTokenExpired, "true");
             }
-
-            res.json(response.json);
         }
 
+        res.json(response.json);
     }
 
 }

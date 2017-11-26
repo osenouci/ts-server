@@ -195,7 +195,7 @@ export class AccountController extends AppController {
         try {
 
             const credentials:Credentials = await this.authService.createLocalAccount(req.body);  // Try to create the account      
-          
+          console.log("Account created");
             let resp = await this.container.emailConnector.sendActivationEmail(                 // Send the activation email
                 `${credentials.user.documentId}.${credentials.id}`, 
                 credentials.user.name, 
@@ -205,6 +205,7 @@ export class AccountController extends AppController {
             );
 
         } catch(err) {
+            console.log("Error while creating the account", err);
             let errorMessage = this.getAccountCreationErrorMessage(err);
             response.error   = this.translateUsingRequest(errorMessage, req);
         }

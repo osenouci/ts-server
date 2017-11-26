@@ -235,8 +235,10 @@ export class JSONWebTokenService {
                 console.log('Checking if the access token has expired', accessToken);
                 
                 let securityToken:SecurityToken = new SecurityToken(accessToken);
+                console.log("Decoding token", securityToken);
                 await securityToken.decode();
-        console.log("userId:", securityToken.data);
+                console.log("Access token decoding done");
+                 console.log(" >> userId:", securityToken.data);
                 if(securityToken.hasExpired()) {                                        // Make sure that the refresh token has not expired yet.
                     console.log("Token has expired. Request rejected");
                     throw JWTErrorCodes.NO_TOKEN_PROVIDED;

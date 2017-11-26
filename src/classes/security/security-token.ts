@@ -32,12 +32,6 @@ export class SecurityToken {
     decode():Promise<any> {
 
         return new Promise((resolve, reject) => {
-
-            if(!this.token) {
-                reject("Invalid token");
-                return;
-            }
-
             jwt.verify(this.token, Config.tokenConfig.signSecret, (err, decoded) => {
 
                 if(err) {

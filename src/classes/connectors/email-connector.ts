@@ -38,6 +38,9 @@ export class EmailConnector {
     protected postData(path:string, data:any, language:string = "en"){
 
         return new Promise((resolve, reject) => {
+
+            console.log("Notification server URL: " + Config.notificationServiceConfig.host);
+
             unirest.post(Config.notificationServiceConfig.host + path)
             .headers({'accept-language': language})
             .send(data)
